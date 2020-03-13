@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Cygwin or WSL
+if [[ "$OSTYPE" =~ cygwin ]];then
+  flag=1
+else
+  flag=0
+fi
+
+# character code {{{
+# for cmd.exe, display with UTF8 char-set (default is 932:sjis)
+# 65000 UTF-7
+# 65001 UTF-8
+# 50220 JIS
+# 20932 EUC-JP
+#   932 SJIS
+chcp.com 65001 >/dev/null
+
+#}}}
+
+# Use Windows' symbolic link {{{
+# On Windows 10, it needs Administrator's right
+# Normal user can make links with setting below variable.
+#export CYGWIN="winsymlinks:native"
+export CYGWIN=""
+#export CYGWIN="winsymlinks:nativestrict"
+#}}}
+
+# Variables {{{
+#export WHOME="/cygdrive/c/Users/$(whoami)"
+export WHOME="/mnt/c/Users/$(whoami)"
+#}}}
+
+# docker related wrapper {{{
+if [[ "$flag" -eq 1 ]]; then
+# For 'dokcer-compose exec' command 
+  function docker-compose() {
+    if [ "$1" = "exec" ];then
+      shift
+      winpty docker-compose exec "$@"
+    else
+      command docker-compose "$@"
+    fi
+  }
+else
+  alias docker='cmd.exe /c docker'
+  alias docker-compose='cmd.exe /c docker-compose'
+fi
