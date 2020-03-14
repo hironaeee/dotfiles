@@ -101,8 +101,10 @@ export HISTIGNORE="cd:cd -:cd ../:ls:l:pwd*:history:exit:bg:fg"
 export HISTTIMEFORMAT='%y/%m/%d %H:%M:%S '
 
 # Simple method to add history everytime {{{
-PROMPT_COMMAND="${PROMPT_COMMAND:+${PROMPT_COMMAND};}history -a"
+#PROMPT_COMMAND="${PROMPT_COMMAND:+${PROMPT_COMMAND};}history -a"
 # }}}
+PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+shopt -u histappend
 
 # }}} history
 
@@ -125,6 +127,10 @@ alias lt='ls -altr'
 # }}}
 
 # Setup for each environment {{{
+# tmux
+alias sterm='tmux new-session \; source-file ~/.tmux.window.conf'
+alias startterm='tmux new-session \; source-file ~/.tmux.window.conf'
+
 # vim, neovim
 if type nvim >& /dev/null;then
   alias vi="nvim" # vi->nvim
@@ -147,7 +153,8 @@ fi
 [[ "$OSTYPE" =~ darwin ]] && source_file ~/.macrc
 
 # File used in windows (cygwin)
-[[ "$OSTYPE" =~ cygwin ]] && source_file ~/.winrc
+#[[ "$OSTYPE" =~ cygwin ]] && source_file ~/.winrc
+[[ "$OSTYPE" =~ linux-gnu ]] && [[ $(cat /proc/version | grep Microsoft) ]] && source_file ~/.winrc
 
 # .localrc in each machine
 [[ -e ~/.localrc ]] && source_file ~/.localrc
