@@ -46,3 +46,6 @@ else
   alias docker='cmd.exe /c docker'
   alias docker-compose='cmd.exe /c docker-compose'
 fi
+
+# Alias {{{
+alias open='cmd.exe /c start '
