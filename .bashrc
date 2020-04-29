@@ -74,8 +74,9 @@ export LD_LIBRARY_PATH=$HOME/usr/local/lib
 export CLMAXHIST=100
 
 # Homebrew
-#export PATH=$(brew --prefix)/opt/python3/libexec/bin:$PATH
 export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
+# for 'python3' symlink to 'python'
+export PATH=$(brew --prefix)/opt/python3/libexec/bin:$PATH
 
 if [[ -d "$HOME/.nvm" ]];then
   NVM_DIR="$HOME/.nvm"
