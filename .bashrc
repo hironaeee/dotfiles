@@ -83,17 +83,6 @@ if [ -f $(brew --prefix)/etc/brew-wrap ];then
   source $(brew --prefix)/etc/brew-wrap
 fi
 
-# nvm
-if [[ -d "$HOME/.nvm" ]];then
-  NVM_DIR="$HOME/.nvm"
-  # Load nvm
-  [ -s "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh" ] \
-    && . "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh"
-  # Load nvm bash_completion
-  [ -s "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm" ] \
-    && . "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm"
-fi
-
 # }}} Environmental variables
 
 # History {{{
