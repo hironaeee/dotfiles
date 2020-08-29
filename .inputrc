@@ -1,0 +1,10 @@
+# default settings
+$include /etc/inputrc
+set bell-style none
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+
+# ignore Upper/Lower cases
+set completion-ignore-case on
+# colorize matched letters when auto-completion
+set colored-completion-prefix on
