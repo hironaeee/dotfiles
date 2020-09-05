@@ -8,3 +8,7 @@ for rc in .*rc .*profile .*.conf .*config; do
   [ -e ~/"$rc" ] && mv -v ~/"$rc" bak/"$rc"_$(date '+%Y%m%d%H%M%S')
   ln -sfv "$BASE/$rc" ~/"$rc"
 done
+
+# nvim
+mkdir -p ~/.config/nvim
+ln -sfv "$BASE/.vimrc" ~/.config/nvim/init.vim
