@@ -47,6 +47,9 @@ endif
 " Python auto completion plugin
 Plug 'deoplete-plugins/deoplete-jedi'
 
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
+
 call plug#end()
 endif
 
@@ -105,6 +108,15 @@ let g:deoplete#enable_at_startup = 1
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 " }}} deoplete.nvim
 
+" NERDTree {{{
+nmap <C-n> :NERDTreeToggle<CR>
+" }}} NERDTree
+
+" NERDCommenter {{{
+vmap ++ <plug>NERDCommenterToggle
+nmap ++ <plug>NERDCommenterToggle
+" }}} NERDCommenter
+
 " file encoding
 set encoding=utf-8
 " set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
@@ -144,6 +156,7 @@ set scrolloff=5
 " exchange ':' with ';'
 noremap ; :
 " noremap : ;
+inoremap jk <ESC>
 
 " search command
 nnoremap <silent> <Esc><Esc> :noh<CR>
