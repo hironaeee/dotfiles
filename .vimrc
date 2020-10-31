@@ -50,6 +50,8 @@ Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 
+Plug 'ctrlpvim/ctrlp.vim'
+
 call plug#end()
 endif
 
@@ -116,6 +118,11 @@ nmap <C-n> :NERDTreeToggle<CR>
 vmap ++ <plug>NERDCommenterToggle
 nmap ++ <plug>NERDCommenterToggle
 " }}} NERDCommenter
+
+" ctrlp {{{
+" ignore files in .gitignore
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+" }}} ctrlp
 
 " file encoding
 set encoding=utf-8
