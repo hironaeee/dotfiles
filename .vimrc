@@ -52,6 +52,8 @@ Plug 'scrooloose/nerdcommenter'
 
 Plug 'ctrlpvim/ctrlp.vim'
 
+Plug 'thinca/vim-quickrun'
+
 call plug#end()
 endif
 
@@ -123,6 +125,14 @@ nmap ++ <plug>NERDCommenterToggle
 " ignore files in .gitignore
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 " }}} ctrlp
+
+" vim-quickrun {{{
+let g:quickrun_config = {
+  \ '*' : {
+  \   'outputter/buffer/split': ':botright 10sp',
+  \   'hook/time/enable': 1
+  \   },
+  \ }
 
 " file encoding
 set encoding=utf-8
