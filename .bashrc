@@ -127,10 +127,6 @@ alias lt='ls -altr'
 # }}}
 
 # Setup for each environment {{{
-# tmux
-alias sterm='tmux new-session \; source-file ~/.tmux.window.conf'
-alias startterm='tmux new-session \; source-file ~/.tmux.window.conf'
-
 # vim, neovim
 if type nvim >& /dev/null;then
   alias vi="nvim" # vi->nvim
