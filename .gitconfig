@@ -3,3 +3,5 @@
 	email = c3.sazae3@gmail.com
 [github]
   user = hironaeee
+[pull]
+	rebase = false
