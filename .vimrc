@@ -47,6 +47,9 @@ endif
 " Python auto completion plugin
 Plug 'deoplete-plugins/deoplete-jedi'
 
+" tmux config
+Plug 'christoomey/vim-tmux-navigator'
+
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 
@@ -65,12 +68,7 @@ set foldlevel=0
 set foldlevelstart=99
 
 " mapleader (<Leader>) (default is \)
-let g:mapleader = ','
-" use \, as , instead
-noremap <Subleader> <Nop>
-map <Space> <Subleader>
-nnoremap <Subleader>, ,
-xnoremap <Subleader>, ,
+let g:mapleader = "\<Space>"
 
 " lightline.vim {{{
 let g:lightline={
