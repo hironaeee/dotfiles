@@ -63,7 +63,7 @@ endif
 " QFixHowm
 set runtimepath+=~/tmp/qfixapp
 let QFixHowm_key = 'g'
-let howm_dir = '~/.howm'
+let howm_dir = '~/notes/howm'
 let howm_filename = '%Y/%m/%Y-%m-%d-%H%M%S.txt'
 let howm_fileencoding = 'utf-8'
 let howm_fileformat = 'dos'
