@@ -7,16 +7,18 @@ silent! source $VIMRUNTIME/defaults.vim
 "augroup END
 
 " ref: https://rcmdnk.com/blog/2020/08/11/computer-vim/
-if !filereadable(expand('~/.vim_no_python'))
-  let s:python3 = system('which python3')
-  if strlen(s:python3) != 0
-    let s:python3_dir = $HOME . '/.vim/python3'
-    if ! isdirectory(s:python3_dir)
-      call system('python3 -m venv ' . s:python3_dir)
-      call system('source ' . s:python3_dir . '/bin/activate && pip install pynvim jedi')
+if has('nvim')
+  if !filereadable(expand('~/.vim_no_python'))
+    let s:python3 = system('which python3')
+    if strlen(s:python3) != 0
+      let s:python3_dir = $HOME . '/.vim/python3'
+      if ! isdirectory(s:python3_dir)
+        call system('python3 -m venv ' . s:python3_dir)
+        call system('source ' . s:python3_dir . '/bin/activate && pip install pynvim jedi')
+      endif
+      let g:python3_host_prog = s:python3_dir . '/bin/python'
+      let $PATH = s:python3_dir . '/bin:' . $PATH
     endif
-    let g:python3_host_prog = s:python3_dir . '/bin/python'
-    let $PATH = s:python3_dir . '/bin:' . $PATH
   endif
 endif
 
