@@ -2,21 +2,23 @@
 unlet! skip_defaults_vim
 silent! source $VIMRUNTIME/defaults.vim
 
-augroup vimrc
-  autocmd!
-augroup END
+"augroup vimrc
+  "autocmd!
+"augroup END
 
 " ref: https://rcmdnk.com/blog/2020/08/11/computer-vim/
-if has('nvim') && !filereadable(expand('~/.vim_no_python'))
-  let s:python3 = system('which python3')
-  if strlen(s:python3) != 0
-    let s:python3_dir = $HOME . '/.vim/python3'
-    if ! isdirectory(s:python3_dir)
-      call system('python3 -m venv ' . s:python3_dir)
-      call system('source ' . s:python3_dir . '/bin/activate && pip install pynvim jedi')
+if has('nvim')
+  if !filereadable(expand('~/.vim_no_python'))
+    let s:python3 = system('which python3')
+    if strlen(s:python3) != 0
+      let s:python3_dir = $HOME . '/.vim/python3'
+      if ! isdirectory(s:python3_dir)
+        call system('python3 -m venv ' . s:python3_dir)
+        call system('source ' . s:python3_dir . '/bin/activate && pip install pynvim jedi')
+      endif
+      let g:python3_host_prog = s:python3_dir . '/bin/python'
+      let $PATH = s:python3_dir . '/bin:' . $PATH
     endif
-    let g:python3_host_prog = s:python3_dir . '/bin/python'
-    let $PATH = s:python3_dir . '/bin:' . $PATH
   endif
 endif
 
@@ -30,7 +32,7 @@ Plug 'cocopon/iceberg.vim'
 
 Plug 'itchyny/lightline.vim'
 
-" Syntac Checking
+" Syntax Checking
 if has('nvim') || (has('job') && has('channel') && has('timers'))
   Plug 'w0rp/ale'
 endif
@@ -38,17 +40,20 @@ endif
 " auto completion
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
+elseif has('python3') && has('timers') && system('pip3 show pynvim') != ''
   Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
+Plug 'Shougo/neco-vim'
+Plug 'Shougo/neco-syntax'
+Plug 'ujihisa/neco-look'
 " Python auto completion plugin
 Plug 'deoplete-plugins/deoplete-jedi'
 
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
+" tmux config
+Plug 'christoomey/vim-tmux-navigator'
 
 Plug 'ctrlpvim/ctrlp.vim'
 
@@ -56,6 +61,16 @@ Plug 'thinca/vim-quickrun'
 
 call plug#end()
 endif
+
+" QFixHowm
+set runtimepath+=~/tmp/qfixapp
+let QFixHowm_key = 'g'
+let howm_dir = '~/notes/howm'
+let howm_filename = '%Y/%m/%Y-%m-%d-%H%M%S.txt'
+let howm_fileencoding = 'utf-8'
+let howm_fileformat = 'dos'
+let QFixWin_EnableMode = 1
+let QFix_UseLocationList = 1
 
 " Basic settings {{{
 
@@ -65,12 +80,7 @@ set foldlevel=0
 set foldlevelstart=99
 
 " mapleader (<Leader>) (default is \)
-let g:mapleader = ','
-" use \, as , instead
-noremap <Subleader> <Nop>
-map <Space> <Subleader>
-nnoremap <Subleader>, ,
-xnoremap <Subleader>, ,
+let g:mapleader = "\<Space>"
 
 " lightline.vim {{{
 let g:lightline={
@@ -110,19 +120,11 @@ let g:syntastic_cpp_check_header = 1
 " deoplete.nvim {{{
 let g:deoplete#enable_at_startup = 1
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+highlight Pmenu ctermbg=8 guifg=#dddd00 guibg=#1f82cd
 " }}} deoplete.nvim
 
-" NERDTree {{{
-nmap <C-n> :NERDTreeToggle<CR>
-" }}} NERDTree
-
-" NERDCommenter {{{
-vmap ++ <plug>NERDCommenterToggle
-nmap ++ <plug>NERDCommenterToggle
-" }}} NERDCommenter
-
 " ctrlp {{{
-" ignore files in .gitignore
+" ignore files written in .gitignore
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 " }}} ctrlp
 
@@ -171,32 +173,20 @@ set scrolloff=5
 
 " key binding
 " exchange ':' with ';'
-noremap ; :
+"noremap ; :
 " noremap : ;
 inoremap jk <ESC>
 
 " search command
 nnoremap <silent> <Esc><Esc> :noh<CR>
 
-" save/quit
-nnoremap <A-w> :w<CR>
-nnoremap <A-q> :q!<CR>
-nnoremap <A-z> :ZZ<CR>
 " don't enter Ex mode
 nnoremap Q :q<CR>
-" One characters
-nnoremap Z ZZ
-nnoremap W :w<CR>
-nnoremap ! :q!<CR>
 
 " Close/Close & Save buffer
 nnoremap <Leader>q :bdelete<CR>
 nnoremap <Leader>w :w<CR>bdelete<CR>
 
-augroup vimrc
-  autocmd FileType vim setlocal expandtab shiftwidth=2
-augroup END
-  
 " swap files
 let s:vimdir = $HOME . '/.vim'
 if ! isdirectory(s:vimdir)
