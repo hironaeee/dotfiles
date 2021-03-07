@@ -198,6 +198,28 @@ augroup vimrc
 augroup END
   
 " swap files
+let s:vimdir = $HOME . '/.vim'
+if ! isdirectory(s:vimdir)
+  call system('mkdir ' . s:vimdir)
+endif
+let s:swapdir = s:vimdir . '/tmp'
+echo s:swapdir
+if ! isdirectory(s:swapdir)
+  call system('mkdir -p ' . s:swapdir)
+endif
+let &directory = s:swapdir
 set swapfile
 set nobackup
 set nowritebackup
+
+" undo
+if has('persistent_undo')
+  let s:undodir = s:vimdir . '/undo'
+  let &undodir = s:undodir
+  if ! isdirectory(s:undodir)
+    call system('mkdir ' . s:undodir)
+  endif
+  set undofile
+  set undoreload=1000
+endif
+set undolevels=1000
