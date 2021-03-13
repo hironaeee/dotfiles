@@ -62,16 +62,6 @@ Plug 'thinca/vim-quickrun'
 call plug#end()
 endif
 
-" QFixHowm
-set runtimepath+=~/tmp/qfixapp
-let QFixHowm_key = 'g'
-let howm_dir = '~/notes/howm'
-let howm_filename = '%Y/%m/%Y-%m-%d-%H%M%S.txt'
-let howm_fileencoding = 'utf-8'
-let howm_fileformat = 'dos'
-let QFixWin_EnableMode = 1
-let QFix_UseLocationList = 1
-
 " Basic settings {{{
 
 " folding
@@ -193,7 +183,6 @@ if ! isdirectory(s:vimdir)
   call system('mkdir ' . s:vimdir)
 endif
 let s:swapdir = s:vimdir . '/tmp'
-echo s:swapdir
 if ! isdirectory(s:swapdir)
   call system('mkdir -p ' . s:swapdir)
 endif
