@@ -3,5 +3,12 @@
 	email = c3.sazae3@gmail.com
 [github]
   user = hironaeee
+[core]
+  autocrlf = false
+  quotepath = false
+  pager = LESSCHARSET=utf-8 less
 [pull]
 	rebase = false
+[include]
+  path = .gitconfig_private
+
