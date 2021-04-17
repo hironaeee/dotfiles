@@ -6,21 +6,6 @@ silent! source $VIMRUNTIME/defaults.vim
   "autocmd!
 "augroup END
 
-" ref: https://rcmdnk.com/blog/2020/08/11/computer-vim/
-if has('nvim')
-  if !filereadable(expand('~/.vim_no_python'))
-    let s:python3 = system('which python3')
-    if strlen(s:python3) != 0
-      let s:python3_dir = $HOME . '/.vim/python3'
-      if ! isdirectory(s:python3_dir)
-        call system('python3 -m venv ' . s:python3_dir)
-        call system('source ' . s:python3_dir . '/bin/activate && pip install pynvim jedi')
-      endif
-      let g:python3_host_prog = s:python3_dir . '/bin/python'
-      let $PATH = s:python3_dir . '/bin:' . $PATH
-    endif
-  endif
-endif
 
 " VIM-PLUG {{{
 
@@ -30,29 +15,28 @@ silent! if plug#begin('~/.vim/plugged')
 Plug 'tomasr/molokai'
 Plug 'cocopon/iceberg.vim'
 
-Plug 'itchyny/lightline.vim'
-
-" Syntax Checking
-if has('nvim') || (has('job') && has('channel') && has('timers'))
-  Plug 'w0rp/ale'
-endif
-
-" auto completion
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'lighttiger2505/deoplete-vim-lsp'
-elseif has('python3') && has('timers') && system('pip3 show pynvim') != ''
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-
 " LSP
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 
+let s:python3_dir = $HOME . '/.lsp_servers/pyls-all/venv'
+if isdirectory(s:python3_dir)
+  let s:ret = system('source ' . s:python3_dir . '/bin/activate && pip show pynvim && echo $?')
+  if s:ret != 0
+    call system('source ' . s:python3_dir . '/bin/activate && pip install pynvim')
+  endif
+  let g:python3_host_prog = s:python3_dir . '/bin/python'
+endif
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'lighttiger2505/deoplete-vim-lsp'
+  Plug 'w0rp/ale'
+endif
+
 " tmux config
 Plug 'christoomey/vim-tmux-navigator'
+
+Plug 'itchyny/lightline.vim'
 
 Plug 'ctrlpvim/ctrlp.vim'
 
@@ -61,15 +45,10 @@ Plug 'thinca/vim-quickrun'
 call plug#end()
 endif
 
-" Basic settings {{{
+" }}} VIM-PLUG
 
-" folding
-set foldmethod=marker
-set foldlevel=0
-set foldlevelstart=99
 
-" mapleader (<Leader>) (default is \)
-let g:mapleader = "\<Space>"
+" Plugin Settings {{{
 
 " lightline.vim {{{
 let g:lightline={
@@ -128,6 +107,19 @@ let g:quickrun_config = {
 """ {{{ vim-lsp-settings
 let g:lsp_settings_servers_dir = $HOME . '/.vim/lsp_servers'
 " }}} vim-lsp-settings
+
+" }}} Plugin Settings
+
+
+" Basic Settings {{{
+
+" folding
+set foldmethod=marker
+set foldlevel=0
+set foldlevelstart=99
+
+" mapleader (<Leader>) (default is \)
+let g:mapleader = "\<Space>"
 
 " file encoding
 set encoding=utf-8
@@ -200,3 +192,5 @@ if has('persistent_undo')
   set undoreload=1000
 endif
 set undolevels=1000
+
+" }}} Basic Settings
