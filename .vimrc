@@ -141,12 +141,11 @@ set ruler
 set number
 syntax on
 " color
-hi LineNr ctermfg=7 guifg=7
-hi Comment ctermfg=grey
-hi Visual ctermbg=7 guibg=7
-hi Pmenu ctermbg=7
-hi PmenuSel ctermbg=14
-
+hi LineNr ctermfg=7 guifg=Grey
+hi Comment ctermfg=7 guifg=Grey
+hi Visual ctermbg=7 guibg=Grey
+hi Pmenu ctermbg=7 guibg=Grey
+hi PmenuSel ctermbg=14 guibg=LightBlue
 
 " edit settings
 set backspace=indent,eol,start
@@ -171,27 +170,17 @@ set wildmenu
 set scrolloff=5
 
 " key binding
-" exchange ':' with ';'
-"noremap ; :
-" noremap : ;
 inoremap jk <ESC>
 
 " search command
 nnoremap <silent> <Esc><Esc> :noh<CR>
 
-" don't enter Ex mode
-nnoremap Q :q<CR>
-
-" Close/Close & Save buffer
-nnoremap <Leader>q :bdelete<CR>
-nnoremap <Leader>w :w<CR>bdelete<CR>
-
-" swap files
+" swap
 let s:vimdir = $HOME . '/.vim'
 if ! isdirectory(s:vimdir)
   call system('mkdir ' . s:vimdir)
 endif
-let s:swapdir = s:vimdir . '/tmp'
+let s:swapdir = s:vimdir . '/swap'
 if ! isdirectory(s:swapdir)
   call system('mkdir -p ' . s:swapdir)
 endif
