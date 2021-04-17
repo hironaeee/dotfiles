@@ -40,17 +40,16 @@ endif
 " auto completion
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'lighttiger2505/deoplete-vim-lsp'
 elseif has('python3') && has('timers') && system('pip3 show pynvim') != ''
   Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-Plug 'Shougo/neco-vim'
-Plug 'Shougo/neco-syntax'
-Plug 'ujihisa/neco-look'
-" Python auto completion plugin
-Plug 'deoplete-plugins/deoplete-jedi'
+" LSP
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
 
 " tmux config
 Plug 'christoomey/vim-tmux-navigator'
@@ -110,7 +109,6 @@ let g:syntastic_cpp_check_header = 1
 " deoplete.nvim {{{
 let g:deoplete#enable_at_startup = 1
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-highlight Pmenu ctermbg=8 guifg=#dddd00 guibg=#1f82cd
 " }}} deoplete.nvim
 
 " ctrlp {{{
@@ -125,6 +123,11 @@ let g:quickrun_config = {
   \   'hook/time/enable': 1
   \   },
   \ }
+" }}} vim-quickrun
+
+""" {{{ vim-lsp-settings
+let g:lsp_settings_servers_dir = $HOME . '/.vim/lsp_servers'
+" }}} vim-lsp-settings
 
 " file encoding
 set encoding=utf-8
@@ -135,9 +138,15 @@ set fileformats=unix,dos,mac
 " display style
 set textwidth=0
 set ruler
+set number
 syntax on
+" color
+hi LineNr ctermfg=7 guifg=7
 hi Comment ctermfg=grey
-set relativenumber
+hi Visual ctermbg=7 guibg=7
+hi Pmenu ctermbg=7
+hi PmenuSel ctermbg=14
+
 
 " edit settings
 set backspace=indent,eol,start
