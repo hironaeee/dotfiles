@@ -19,9 +19,9 @@ Plug 'cocopon/iceberg.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 
-let s:python3_dir = $HOME . '/.lsp_servers/pyls-all/venv'
+let s:python3_dir = $HOME . '/.vim/lsp_servers/pyls-all/venv'
 if isdirectory(s:python3_dir)
-  let s:ret = system('source ' . s:python3_dir . '/bin/activate && pip show pynvim && echo $?')
+  let s:ret = system('source ' . s:python3_dir . '/bin/activate && pip show pynvim >/dev/null 2>&1 || echo $?')
   if s:ret != 0
     call system('source ' . s:python3_dir . '/bin/activate && pip install pynvim')
   endif
