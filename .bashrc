@@ -152,7 +152,7 @@ fi
 
 # File used in windows (cygwin)
 #[[ "$OSTYPE" =~ cygwin ]] && source_file ~/.winrc
-[[ "$OSTYPE" =~ linux-gnu ]] && [[ $(cat /proc/version | grep Microsoft) ]] && source_file ~/.winrc
+[[ "$OSTYPE" =~ linux-gnu ]] && [[ $(cat /proc/version | grep WSL) ]] && source_file ~/.winrc
 
 # .localrc in each machine
 [[ -e ~/.localrc ]] && source_file ~/.localrc
