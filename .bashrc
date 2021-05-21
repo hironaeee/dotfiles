@@ -74,13 +74,15 @@ export LD_LIBRARY_PATH=$HOME/usr/local/lib
 export CLMAXHIST=100
 
 # Homebrew
-export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
-# for 'python3' symlink to 'python'
-export PATH=$(brew --prefix)/opt/python3/libexec/bin:$PATH
+if [ -d /home/linuxbrew/.linuxbrew ];then
+  export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
+  # for 'python3' symlink to 'python'
+  export PATH=$(brew --prefix)/opt/python3/libexec/bin:$PATH
 
-# brew-file
-if [ -f $(brew --prefix)/etc/brew-wrap ];then
-  source $(brew --prefix)/etc/brew-wrap
+  # brew-file
+  if [ -f $(brew --prefix)/etc/brew-wrap ];then
+    source $(brew --prefix)/etc/brew-wrap
+  fi
 fi
 
 # }}} Environmental variables
