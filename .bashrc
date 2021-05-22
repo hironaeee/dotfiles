@@ -70,6 +70,16 @@ export PAGER=less
 export PATH=~/usr/bin:~/usr/local/bin:$PATH
 export LD_LIBRARY_PATH=$HOME/usr/local/lib
 
+# shopt
+# auto correct path name, then cd path
+shopt -s cdspell
+# when use glob displaying also dotfiles
+shopt -s dotglob
+# pattern matching in command line
+shopt -s extglob
+# a multiple-line command in the same entry in history
+shopt -s cmdhist
+
 # for my clipboards
 export CLMAXHIST=100
 
