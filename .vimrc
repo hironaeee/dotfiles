@@ -19,7 +19,7 @@ Plug 'cocopon/iceberg.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 
-let s:python3_dir = $HOME . '/.vim/lsp_servers/pyls-all/venv'
+let s:python3_dir = $HOME . '/.vim/lsp_servers/pylsp-all/venv'
 if isdirectory(s:python3_dir)
   let s:ret = system('source ' . s:python3_dir . '/bin/activate && pip show pynvim >/dev/null 2>&1 || echo $?')
   if s:ret != 0
@@ -192,5 +192,9 @@ if has('persistent_undo')
   set undoreload=1000
 endif
 set undolevels=1000
+
+if filereadable(expand($HOME.'.vimrc.local'))
+  source $HOME/.vimrc.local
+endif
 
 " }}} Basic Settings
