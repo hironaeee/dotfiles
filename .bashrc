@@ -84,16 +84,24 @@ shopt -s cmdhist
 export CLMAXHIST=100
 
 # Homebrew
-if [ -d /home/linuxbrew/.linuxbrew ];then
-  export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
-  # for 'python3' symlink to 'python'
-  export PATH=$(brew --prefix)/opt/python3/libexec/bin:$PATH
-
-  # brew-file
-  if [ -f $(brew --prefix)/etc/brew-wrap ];then
-    source $(brew --prefix)/etc/brew-wrap
-  fi
+brew_dirs=()
+if [[ "$OSTYPE" = darwin* ]];then
+  brew_dirs=(/opt/homebrew)
+else
+  brew_dirs=(/home/linuxbrew/.linuxbrew)
 fi
+for path in "${brew_dirs[@]}";do
+  if [ -d "$path" ];then
+    export PATH=$path/bin:$PATH
+  fi
+done
+
+brew_prefix=$(command brew --prefix 2>/dev/null)
+ret=$?
+if [ $ret -ne 0 ];then
+  return
+fi
+source "$brew_prefix/etc/brew-wrap"
 
 # }}} Environmental variables
 
