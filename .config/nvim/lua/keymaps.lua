@@ -13,3 +13,7 @@ keymap.set("n", "sl", "<C-w>l")
 keymap.set("n", "te", ":tabedit<Return>")
 keymap.set("n", "<S-Tab>", ":tabprev<Return>")
 keymap.set("n", "<Tab>", ":tabnext<Return>")
+
+-- move selected line
+keymap.set("v", "J", ":m '>+1<Return>gv=gv")
+keymap.set("v", "K", ":m '<-2<Return>gv=gv")

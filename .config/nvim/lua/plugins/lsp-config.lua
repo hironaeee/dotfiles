@@ -1,11 +1,5 @@
 return {
 	{
-		"williamboman/mason.nvim",
-		config = function()
-			require("mason").setup({})
-		end,
-	},
-	{
 		"jay-babu/mason-null-ls.nvim",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
@@ -13,27 +7,13 @@ return {
 			"nvimtools/none-ls.nvim",
 		},
 		config = function()
+			-- Linter / Formatter auto installation
 			require("mason-null-ls").setup({
 				ensure_installed = {
 					"stylua",
 					"prettierd",
 					"eslint_d",
-				},
-			})
-		end,
-	},
-	{
-		"williamboman/mason-lspconfig.nvim",
-		dependencies = { "williamboman/mason.nvim" },
-		config = function()
-			local mason = require("mason-lspconfig")
-			mason.setup({
-				ensure_installed = {
-					"lua_ls",
-					"tsserver",
-					"tailwindcss",
-					"html",
-					"cssls",
+					"csharpier",
 				},
 			})
 		end,
@@ -41,24 +21,31 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		lazy = false,
+		dependencies = {
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
+		},
 		config = function()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-			local lspconfig = require("lspconfig")
-			lspconfig.lua_ls.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.ts_ls.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.tailwindcss.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.html.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.cssls.setup({
-				capabilities = capabilities,
+			-- LSP servers auto installation
+			require("mason").setup({})
+			require("mason-lspconfig").setup({
+				ensure_installed = {
+					"lua_ls",
+					"ts_ls",
+					"tailwindcss",
+					"html",
+					"cssls",
+					"csharp_ls",
+				},
+				handlers = {
+					function(server_name) -- default handler
+						require("lspconfig")[server_name].setup({
+							capabilities = capabilities,
+						})
+					end,
+				},
 			})
 
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
