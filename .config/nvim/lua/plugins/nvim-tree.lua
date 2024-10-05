@@ -71,6 +71,12 @@ return {
 			end,
 		})
 
-		vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<Return>", { silent = true })
+		local api = require("nvim-tree.api")
+
+		vim.keymap.set("n", "<leader>ee", ":NvimTreeToggle<Return>", { silent = true })
+		vim.keymap.set("n", "<leader>ef", ":NvimTreeFindFileToggle<Return>", { silent = true })
+		vim.keymap.set("n", "<leader>ec", ":NvimTreeCollapse<Return>", { silent = true })
+		vim.keymap.set("n", "<leader>er", ":NvimTreeRefresh<Return>", { silent = true })
+		vim.keymap.set("n", "<leader>egi", api.tree.toggle_gitignore_filter, {})
 	end,
 }

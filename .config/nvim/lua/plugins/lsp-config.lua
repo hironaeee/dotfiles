@@ -13,7 +13,6 @@ return {
 					"stylua",
 					"prettierd",
 					"eslint_d",
-					"csharpier",
 				},
 			})
 		end,
@@ -37,7 +36,6 @@ return {
 					"tailwindcss",
 					"html",
 					"cssls",
-					"csharp_ls",
 				},
 				handlers = {
 					function(server_name) -- default handler
