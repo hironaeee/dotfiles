@@ -1,4 +1,6 @@
 bak
 
 lazy-lock.json
+
+*.localrc
 *.local.lua

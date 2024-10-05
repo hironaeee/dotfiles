@@ -98,3 +98,7 @@ if [[ -f $ble_sh ]]; then
   bleopt edit_marker=
   bleopt edit_marker_error=
 fi
+
+if [[ -f ~/.localrc ]]; then
+  source ~/.localrc
+fi
