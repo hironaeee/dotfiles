@@ -105,6 +105,11 @@ if [[ -f $ble_sh ]]; then
   bleopt edit_marker_error=
 fi
 
+# Smarter cd command
+if type zoxide >& /dev/null; then
+  eval "$(zoxide init bash)"
+fi
+
 if [[ -f ~/.localrc ]]; then
   source ~/.localrc
 fi
