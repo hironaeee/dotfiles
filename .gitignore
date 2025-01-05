@@ -1,6 +1,12 @@
+# a backup folder
 bak
 
-lazy-lock.json
+# OS generated files
+.DS_Store
 
-*.localrc
-*.local.lua
+# local only files
+.localrc
+.local.lua
+
+# exclude because of frequency reason
+lazy-lock.json
