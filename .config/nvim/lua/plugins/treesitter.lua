@@ -18,9 +18,6 @@ return {
 				"json",
 				"css",
 			},
-			autotag = {
-				enable = true,
-			},
 			diagnostics = {
 				disable = { "missing-fields" },
 			},
