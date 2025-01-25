@@ -12,10 +12,13 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 
-# Homebrew
-export PATH=/opt/homebrew/bin:$PATH
-# NodeJS
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # Homebrew
+  export PATH=/opt/homebrew/bin:$PATH
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  # Homebrew
+  export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
+fi
 
 # Prompt
 # Show random face according to the command return code
@@ -93,6 +96,9 @@ HISTSIZE=500000
 HISTFILESIZE=100000
 export HISTCONTROL="erasedups:ignoreboth"
 export HISTIGNORE="cd:cd -:cd ../:ls:l:la:lt:pwd*:history:exit"
+
+# NodeJS
+export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 # Syntax highlighting / Auto completion
 ble_sh=~/.local/share/blesh/ble.sh
