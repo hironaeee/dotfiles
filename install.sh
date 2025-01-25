@@ -12,7 +12,9 @@ for rc in .*rc .*profile; do
   [ -e ~/"$rc" ] && mv -v ~/"$rc" bak/"$rc"_$(date '+%Y%m%d%H%M%S')
   ln -sfv "$BASE/$rc" ~/"$rc"
 done
+mkdir -pv ~/.config
 for config in .config/*; do
-  [ -e ~/"$config" ] && mv -v ~/"$config" bak/"$config"_$(date '+%Y%m%d%H%M%S')
-  ln -sfv "$BASE/$config" ~/"$config"
+  if [ ! -e ~/"$config" ]; then
+    ln -sfv "$BASE/$config" ~/"$config"
+  fi
 done
