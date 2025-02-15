@@ -1,3 +1,5 @@
 require("options")
 require("keymaps")
-require("plugin")
+if vim.fn.has("gui_running") == 0 then
+  require("plugin")
+end
