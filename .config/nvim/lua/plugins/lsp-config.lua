@@ -11,7 +11,7 @@ return {
 			require("mason-null-ls").setup({
 				ensure_installed = {
 					"stylua",
-					"prettierd",
+					"prettier",
 					"eslint_d",
 				},
 			})
@@ -43,6 +43,11 @@ return {
 							capabilities = capabilities,
 						})
 					end,
+				},
+				settings = {
+					experimental = {
+						useFlatConfig = true,
+					},
 				},
 			})
 
