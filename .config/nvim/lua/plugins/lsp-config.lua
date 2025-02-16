@@ -1,23 +1,5 @@
 return {
 	{
-		"jay-babu/mason-null-ls.nvim",
-		event = { "BufReadPre", "BufNewFile" },
-		dependencies = {
-			"williamboman/mason.nvim",
-			"nvimtools/none-ls.nvim",
-		},
-		config = function()
-			-- Linter / Formatter auto installation
-			require("mason-null-ls").setup({
-				ensure_installed = {
-					"stylua",
-					"prettier",
-					"eslint_d",
-				},
-			})
-		end,
-	},
-	{
 		"neovim/nvim-lspconfig",
 		lazy = false,
 		dependencies = {
@@ -60,6 +42,24 @@ return {
 			vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, {})
 			vim.keymap.set("n", "<leader>dN", vim.diagnostic.goto_prev, {})
 			vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
+		end,
+	},
+	{
+		"jay-babu/mason-null-ls.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+		dependencies = {
+			"williamboman/mason.nvim",
+			"nvimtools/none-ls.nvim",
+		},
+		config = function()
+			-- Linter / Formatter auto installation
+			require("mason-null-ls").setup({
+				ensure_installed = {
+					"stylua",
+					"prettier",
+					"eslint_d",
+				},
+			})
 		end,
 	},
 }
