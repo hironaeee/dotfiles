@@ -7,6 +7,7 @@ bak
 # local only files
 .localrc
 .local.lua
+local.lua
 
 # exclude because of frequency reason
 lazy-lock.json
