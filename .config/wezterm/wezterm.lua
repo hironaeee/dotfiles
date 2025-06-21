@@ -24,6 +24,8 @@ local is_win = os_type() == "win"
 
 config.audible_bell = "Disabled"
 
+config.font_size = 9.5
+
 config.window_decorations = "RESIZE"
 config.window_padding = {
 	left = 0,
