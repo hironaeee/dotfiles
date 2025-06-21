@@ -24,8 +24,6 @@ local is_win = os_type() == "win"
 
 config.audible_bell = "Disabled"
 
-config.font_size = 9.5
-
 config.window_decorations = "RESIZE"
 config.window_padding = {
 	left = 0,
@@ -42,6 +40,8 @@ elseif is_win then
 
 	config.window_background_opacity = 0.7
 	config.win32_system_backdrop = "Acrylic"
+
+	config.font_size = 9.5
 
 	-- multiplecer like tmux
 	config.leader = { key = " ", mods = "CTRL", timeout_milliseconds = 1000 }
@@ -104,6 +104,8 @@ elseif is_win then
 			action = wezterm.action.ActivateTabRelative(-1),
 		},
 	}
+elseif is_unix then
+	config.font_size = 9.5
 end
 
 return config
