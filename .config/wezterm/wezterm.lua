@@ -43,6 +43,15 @@ elseif is_win then
 
 	config.font_size = 9.5
 
+	config.font = wezterm.font_with_fallback({
+		{
+			family = "SauceCodePro Nerd Font",
+		},
+		{
+			family = "Monoid Nerd Font",
+		},
+	})
+
 	-- multiplecer like tmux
 	config.leader = { key = " ", mods = "CTRL", timeout_milliseconds = 1000 }
 	config.keys = {
