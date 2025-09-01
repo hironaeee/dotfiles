@@ -17,6 +17,7 @@ return {
 				"lua",
 				"json",
 				"css",
+				"go",
 			},
 			diagnostics = {
 				disable = { "missing-fields" },
