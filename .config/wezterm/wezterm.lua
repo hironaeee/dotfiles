@@ -32,6 +32,15 @@ config.window_padding = {
 	bottom = 0,
 }
 
+config.font = wezterm.font_with_fallback({
+	{
+		family = "SauceCodePro Nerd Font",
+	},
+	{
+		family = "Monoid Nerd Font",
+	},
+})
+
 if is_mac then
 	config.window_background_opacity = 0.8
 	config.macos_window_background_blur = 50
@@ -42,15 +51,6 @@ elseif is_win then
 	config.win32_system_backdrop = "Acrylic"
 
 	config.font_size = 9.5
-
-	config.font = wezterm.font_with_fallback({
-		{
-			family = "SauceCodePro Nerd Font",
-		},
-		{
-			family = "Monoid Nerd Font",
-		},
-	})
 
 	-- multiplecer like tmux
 	config.leader = { key = " ", mods = "CTRL", timeout_milliseconds = 1000 }
