@@ -2,27 +2,32 @@ local wezterm = require("wezterm")
 
 local config = wezterm.config_builder()
 
-local os_type = function()
-	local env_home = os.getenv("HOME") or os.getenv("USERPROFILE") or ""
-	if string.find(env_home, "/") then
-		local os_name = io.popen("uname -s", "r"):read("*l"):lower()
-		if os_name == "darwin" then
-			return "mac"
-		else
-			return "unix"
-		end
-	elseif string.find(env_home, "\\") then
-		return "win"
-	else
-		return ""
+local function read_file(path)
+	local file = io.open(path, "r")
+	if not file then
+		return nil
+	end
+	local content = file:read("a")
+	file:close()
+	return content
+end
+
+local function source_if_exists(filename)
+	local path = wezterm.config_dir .. "/" .. filename
+	if not read_file(path) then
+		return
+	end
+
+	local ok, err = pcall(function()
+		dofile(path)(config)
+	end)
+	if not ok then
+		wezterm.log_error("Failed to load " .. path .. ": " .. tostring(err))
 	end
 end
 
-local is_mac = os_type() == "mac"
-local is_unix = os_type() == "unix"
-local is_win = os_type() == "win"
-
 config.audible_bell = "Disabled"
+config.warn_about_missing_glyphs = false
 
 config.window_decorations = "RESIZE"
 config.window_padding = {
@@ -33,88 +38,38 @@ config.window_padding = {
 }
 
 config.font = wezterm.font_with_fallback({
-	{
-		family = "SauceCodePro Nerd Font",
-	},
-	{
-		family = "Monoid Nerd Font",
-	},
+	"Mononoki Nerd Font",
+	"PlemolJP",
 })
+config.line_height = 1.3
 
+local is_mac = wezterm.target_triple:find("apple") ~= nil
+local is_linux = wezterm.target_triple:find("linux") ~= nil
+local is_win = wezterm.target_triple:find("windows") ~= nil
+-- blur
 if is_mac then
 	config.window_background_opacity = 0.8
 	config.macos_window_background_blur = 50
 elseif is_win then
-	config.default_prog = { "pwsh.exe" }
-
 	config.window_background_opacity = 0.7
 	config.win32_system_backdrop = "Acrylic"
-
-	config.font_size = 9.5
-
-	-- multiplecer like tmux
-	config.leader = { key = " ", mods = "CTRL", timeout_milliseconds = 1000 }
-	config.keys = {
-		-- split the window vertically
-		{
-			key = "v",
-			mods = "LEADER",
-			action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
-		},
-		-- split the window horizontally
-		{
-			key = "s",
-			mods = "LEADER",
-			action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
-		},
-		-- move between windows
-		{
-			key = "j",
-			mods = "LEADER",
-			action = wezterm.action.ActivatePaneDirection("Down"),
-		},
-		{
-			key = "k",
-			mods = "LEADER",
-			action = wezterm.action.ActivatePaneDirection("Up"),
-		},
-		{
-			key = "h",
-			mods = "LEADER",
-			action = wezterm.action.ActivatePaneDirection("Left"),
-		},
-		{
-			key = "l",
-			mods = "LEADER",
-			action = wezterm.action.ActivatePaneDirection("Right"),
-		},
-		-- open a new tab
-		{
-			key = "c",
-			mods = "LEADER",
-			action = wezterm.action.SpawnTab("DefaultDomain"),
-		},
-		-- close a tab
-		{
-			key = "x",
-			mods = "LEADER",
-			action = wezterm.action.CloseCurrentTab({ confirm = true }),
-		},
-		-- move the next tab
-		{
-			key = "n",
-			mods = "LEADER",
-			action = wezterm.action.ActivateTabRelative(1),
-		},
-		-- move the previous tab
-		{
-			key = "p",
-			mods = "LEADER",
-			action = wezterm.action.ActivateTabRelative(-1),
-		},
-	}
-elseif is_unix then
-	config.font_size = 9.5
 end
+-- pywal16
+if is_mac or is_linux then
+	local home = os.getenv("HOME")
+	if home then
+		local wal_colors_path = home .. "/.cache/wal/colors-wezterm.toml"
+		if read_file(wal_colors_path) then
+			local wal_colors = wezterm.color.load_scheme(wal_colors_path)
+			config.colors = wal_colors
+		end
+	end
+end
+-- Windows specific config
+if is_win then
+	source_if_exists("wezterm_win.lua")
+end
+
+source_if_exists("local.lua")
 
 return config
